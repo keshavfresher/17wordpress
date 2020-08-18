@@ -1822,9 +1822,9 @@ a.btn.btn-mo.btn-block.btn-social.btn-customtheme.btn-custom-dec.login-button{
     top: 10px;
     left: 10px;
     z-index: 1;
-    border: 1px solid black;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
     background-color: white !important;
-    color: black;
+    color: #424242;
     height: auto;
     padding: 2px 10px 2px 10px !important;
     border-radius: 5px;
