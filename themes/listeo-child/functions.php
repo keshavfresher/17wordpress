@@ -126,4 +126,7 @@ function whero_limit_image_size($file) {
 	return $file;
 
 }
-add_filter('wp_handle_upload_prefilter', 'whero_limit_image_size');
+/**
+ * Commented this code, as client does not want such restriction
+ **/
+//add_filter('wp_handle_upload_prefilter', 'whero_limit_image_size');
