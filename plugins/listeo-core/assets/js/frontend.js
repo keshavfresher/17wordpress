@@ -940,8 +940,8 @@
           
           if(m_email_found == 1 || m_mobile_found == 1  || m_url_found == 1 || m_ekthret_found == 1) {
             var listeo_msg_err = '<div style="margin-top: 5px;" class="listeo_msg_err notification error listing-manager-error">Websites, emails and phone numbers aren’t allowed in message. To keep Hypley users and yourself safe from phishing, scraping etc please remove to continue publishing your message.<a class="close"></a></div>';
-            
-            $("#send-message-from-chat").after(listeo_msg_err);
+            $('.listeo_msg_err').remove();
+            $("#contact-message").after(listeo_msg_err);
           }
           else{
 
@@ -2120,3 +2120,56 @@
     
     })(this.jQuery);
     /**/
+
+    /* Message validation */
+
+function CheckUrl(text) {
+  if (new RegExp("([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?(/.*)?").test(text)) {
+      return true;
+  }
+  else {
+      return false;
+  }
+}
+
+jQuery("#contact-message").blur(function() {
+    var message = jQuery(this).val();
+    if(message.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)) {
+      var email_found = 1;
+    }
+    else {
+      var email_found = 0;
+    }
+
+    if(message.match(/[\+]?\d{6}|\(\d{3}\)\s?-\d{6}/)) {  
+      var mobile_found = 1;
+    }
+    else {
+      var mobile_found = 0; 
+    }
+
+    if(CheckUrl(message)) {
+      var url_found = 1;
+    }
+    else {
+      var url_found = 0;
+    }
+
+    if(message.match(/(@[a-zA-Z0-9._-])/gi)) {
+      var ekthret_found = 1;
+    }
+    else {
+      var ekthret_found = 0;
+    }
+
+    if(email_found == 1 || mobile_found == 1  || url_found == 1 || ekthret_found == 1) {
+        jQuery(this).addClass("invalid_listing_description");
+        jQuery(".listeo_msg_err").remove();
+        var email_mobile_notic = '<div style="margin-top: 5px;" class="listeo_msg_err notification error listing-manager-error">Websites, emails and phone numbers aren’t allowed in message. To keep Hypley users and yourself safe from phishing, scraping etc please remove to continue publishing your message.<a class="close"></a></div>';
+        
+        jQuery(this).after(email_mobile_notic);
+    }
+    else{
+        jQuery(".listeo_msg_err").remove();
+    }
+});
