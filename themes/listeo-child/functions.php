@@ -130,3 +130,82 @@ function whero_limit_image_size($file) {
  * Commented this code, as client does not want such restriction
  **/
 //add_filter('wp_handle_upload_prefilter', 'whero_limit_image_size');
+
+/*----------------------------------------------------*/
+/*  START : Time Picker - Drop Down List
+/*----------------------------------------------------*/
+function time_picker_script() {
+?>
+<script>
+(function($){	
+
+	//Append 12 hr format list
+	$("input.time-picker.flatpickr-input.active").focus(function(){
+
+ 	var time_picker=jQuery(".flatpickr-calendar.hasTime.noCalendar.animate.showTimeInput.arrowTop.open");
+ 	jQuery("div.flatpickr-time").hide();
+
+ 	if ($( "#time_pickr_list" ).length) {
+  		return;
+	}
+
+	var toAppend='<select id="time_pickr_list" name="time_pickr_list" size="10" style="height:300px;">';
+
+   	for (var hr=0;hr<24;hr++)
+   	{
+       		var hrStr=hr.toString().padStart(2,"0")+":";
+      
+      		var append1=" am";
+
+	      	if(parseInt(hrStr)>=12)
+	      	{
+			append1=" pm";
+			hrStr=parseInt(hrStr)-12;
+			if(hrStr<=9)
+			{
+				hrStr="0"+hrStr;
+			}
+			if(parseInt(hrStr)==0)
+			{
+				hrStr="12";
+			}
+			hrStr=hrStr+":";
+      		}
+             
+	      var val=hrStr+"00"+append1;   	
+
+	       toAppend=toAppend+'<option class="time_pickr_item" style="height:30px;" val='+val+'>'+val+'</option>';
+
+	       val=hrStr+"30"+append1;
+	      toAppend=toAppend+'<option class="time_pickr_item" style="height:30px;" val='+val+'>'+val+'</option>';
+   	} 
+   	toAppend=toAppend+'</select>';
+   	time_picker.append(toAppend);
+  
+	});
+	
+	// update time-picker values and trigger onChange() function
+	$('body').on('click', '.time_pickr_item', function(evt) {
+	  	evt.stopPropagation();
+	  	var time_12hr=$(this).val();    
+	    	$('input.time-picker.flatpickr-input').val(time_12hr);
+		
+		var arr=time_12hr.split(/[ :]+/);
+		
+		if(arr[2]=="pm" && arr[0]!=12){
+			arr[0]=parseInt(arr[0])+12;
+		}
+		var time_24hr=arr[0]+":"+arr[1];
+		time_24hr=time_24hr.toString();
+		
+		const fp_element = document.querySelector("input.time-picker.flatpickr-input");
+		fp_element._flatpickr.setDate(time_24hr, true,"h:i");
+	});
+})( jQuery );	
+</script>
+ <?php
+}
+add_action('wp_footer','time_picker_script');
+/*----------------------------------------------------*/
+/*  END : Time Picker - Drop Down List
+/*----------------------------------------------------*/
