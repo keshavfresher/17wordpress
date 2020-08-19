@@ -240,21 +240,7 @@ if( true == $my_account_display) : ?>
 
 <script type="text/javascript">
 jQuery( document ).ready(function() {
-	<?php 
-	if(is_page(66)){
-		?>		
-		setTimeout(function(){ jQuery('.sign_in_li').trigger('click'); }, 200);
-		<?php
-	}
-	else{
-		?>
-		setTimeout(function(){ jQuery('.sign_up_li').trigger('click'); }, 200);
-	<?php
-	}
-	?>
-	jQuery('.btn.btn-mo.btn-block.btn-social.btn-customtheme.btn-custom-dec.login-button').attr("style","");
-	jQuery('.mofa.mofa-google').css("margin-top","5px");
-	jQuery('.mofa.mofa-facebook').css("margin-top","5px");
+	setTimeout(function(){ jQuery('.sign_up_li').trigger('click'); }, 200);
 });
 </script>
 <script>

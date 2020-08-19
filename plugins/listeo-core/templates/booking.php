@@ -102,7 +102,7 @@ foreach ( (array) $gallery as $attachment_id => $attachment_url )
 				if(get_option('listeo_disable_payments')) {
 			 		($instant_booking == 'on') ? esc_html_e('Confirm', 'listeo_core') : esc_html_e('Confirm and Book', 'listeo_core') ;  
 				} else {
-					($instant_booking == 'on') ? esc_html_e('Confirm and Pay', 'listeo_core') : esc_html_e('Confirm and Book', 'listeo_core') ;  
+					($instant_booking == 'on') ? esc_html_e('Confirm', 'listeo_core') : esc_html_e('Confirm and Book', 'listeo_core') ;  
 				}
 			?>" class="button margin-top-20 margin-bottom-20" />
 					

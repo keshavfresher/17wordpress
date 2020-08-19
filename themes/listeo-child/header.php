@@ -90,12 +90,12 @@ $sticky = apply_filters('listeo_sticky_header_filter',$sticky);
 ?>
 <!-- Header Container
 ================================================== -->
-<header id="header-container" class="<?php echo esc_attr(($sticky == true || $sticky == 1) ? "sticky-header" : ''); ?> <?php echo esc_attr($header_layout); ?>">
+<header id="header-container" class="<?php echo esc_attr(($sticky == true || $sticky == 1) ? "sticky-header" : ''); ?> 
 
 	<!-- Header -->
 	<div id="header">
 		<div class="container">
-		<?php 
+			<?php 
 				$logo = get_option( 'pp_logo_upload', '' ); 
 				$logo_transparent = get_option( 'pp_dashboard_logo_upload', '' ); 
 			 ?>
@@ -199,24 +199,10 @@ if( true == $my_account_display && !is_page_template( 'template-dashboard.php' )
 <?php endif; ?>
 <div class="clearfix"></div>
 <!-- Header Container / End -->
-
+<?php global $template; echo basename($template); ?>
 <script type="text/javascript">
 	jQuery( document ).ready(function() {
-		<?php 
-		if(is_page(66)){
-			?>		
-			setTimeout(function(){ jQuery('.sign_in_li').trigger('click'); }, 200);
-			<?php
-		}
-		else{
-			?>
-			setTimeout(function(){ jQuery('.sign_up_li').trigger('click'); }, 200);
-		<?php
-		}
-		?>
-		jQuery('.btn.btn-mo.btn-block.btn-social.btn-customtheme.btn-custom-dec.login-button').attr("style","");
-		jQuery('.mofa.mofa-google').css("margin-top","5px");
-		jQuery('.mofa.mofa-facebook').css("margin-top","5px");
+		setTimeout(function(){ jQuery('.sign_up_li').trigger('click'); }, 200);
 	});
 </script>
 
