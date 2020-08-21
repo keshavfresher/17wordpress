@@ -173,11 +173,14 @@ else: ?>
 					<li><a href="#listing-location"><?php esc_html_e('Location','listeo_core'); ?></a></li>
 					<?php 
 					endif;
+                    echo 'tetxt asd here';
 					if(get_post_meta( $post->ID, '_cancellation_policy', true) != '') {
 					?>
 						<li><a href="#listing-cancellation_policy"><?php esc_html_e('Cancellation policy','listeo_core'); ?></a></li>	
 					<?php
+                    
 					}
+                    
 					if(!get_option('listeo_disable_reviews')){
 						$reviews = get_comments(array(
 						    'post_id' => $post->ID,
@@ -196,7 +199,7 @@ else: ?>
 				<?php $template_loader->get_template_part( 'single-partials/single-listing','main-details' );  ?>
 				
 				<!-- Description -->
-	
+				
 				<?php the_content(); ?>
 				<?php $template_loader->get_template_part( 'single-partials/single-listing','socials' );  ?>
 				<?php $template_loader->get_template_part( 'single-partials/single-listing','features' );  ?>
@@ -298,6 +301,11 @@ else: ?>
 									}
 								?>
 						</div>
+					</div>
+					<div>
+						<?php if ( is_active_sidebar( 'single_unveryfie_siderbar' ) ) : ?>
+								<?php dynamic_sidebar( 'single_unveryfie_siderbar' ); ?>
+						<?php endif; ?>
 					</div>
 					<?php
 				} ?>
