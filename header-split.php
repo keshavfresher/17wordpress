@@ -43,15 +43,25 @@
 		                $logo_retina = get_option( 'pp_retina_logo_upload', '' ); 
 		             	if($logo) {
 		                    if(is_front_page()){ ?>
-		                    <a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr(get_bloginfo('name', 'display')); ?>" rel="home"><img src="<?php echo esc_url($logo); ?>" data-rjs="<?php echo esc_url($logo_retina); ?>" alt="<?php esc_attr(bloginfo('name')); ?>"/></a>
+		                    <a href="<?php echo esc_url( 'www.hypley.com.au' ); ?>" title="<?php echo esc_attr(get_bloginfo('name', 'display')); ?>" rel="home">
+		                    	<img src="<?php echo esc_url($logo); ?>" data-rjs="<?php echo esc_url($logo_retina); ?>" alt="<?php esc_attr(bloginfo('name')); ?>" width="125" height="40"/>
+		                    </a>
 		                    <?php } else { ?>
-		                    <a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><img src="<?php echo esc_url($logo); ?>" data-rjs="<?php echo esc_url($logo_retina); ?>" alt="<?php esc_attr(bloginfo('name')); ?>"/></a>
+		                    <a href="<?php echo esc_url( 'www.hypley.com.au' ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">
+		                    	<img src="<?php echo esc_url($logo); ?>" data-rjs="<?php echo esc_url($logo_retina); ?>" alt="<?php esc_attr(bloginfo('name')); ?>" width="125" height="40"/>
+		                    </a>
 		                    <?php }
 		                } else {
 		                    if(is_front_page()) { ?>
-		                    <h1><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+		                    <h1>
+		                    	<a href="<?php echo esc_url( 'www.hypley.com.au' ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">
+		                    		<?php bloginfo( 'name' ); ?></a></h1>
 		                    <?php } else { ?>
-		                    <h2><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h2>
+		                    <h2>
+		                    	<a href="<?php echo esc_url( 'www.hypley.com.au' ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">
+		                    		<?php bloginfo( 'name' ); ?>
+		                    	</a>
+		                    </h2>
 		                    <?php }
 		                }
 	                ?>
@@ -106,6 +116,15 @@
 						<div class="user-menu">
 							<div class="user-name"><span><?php echo get_avatar( $current_user->user_email, 32 );?></span><?php esc_html_e('My Account','listeo') ?></div>
 							<ul>
+								
+							<?php if(is_user_logged_in()){ ?>
+								<?php if(in_array($role,array('administrator','admin','owner'))) : ?>
+									<?php $submit_page = get_option('listeo_submit_page'); ?>
+										<li <?php if( $post->ID == $submit_page ) : ?>class="active" <?php endif; ?>><a href="<?php echo esc_url(get_permalink($submit_page)); ?>" class=""><?php esc_html_e('Add Listing', 'listeo'); ?> <i class="sl sl-icon-plus"></i></a></li>
+								<?php endif; ?>
+							<?php } ?> 
+
+
 							<?php if(!in_array($role,array('owner'))) : ?>
 								<?php $user_bookings_page = get_option('listeo_user_bookings_page');  if( $user_bookings_page ) : ?>
 								<li <?php if( $post->ID == $user_bookings_page ) : ?>class="active" <?php endif; ?>><a href="<?php echo esc_url(get_permalink($user_bookings_page)); ?>"><i class="fa fa-calendar-check-o"></i> <?php esc_html_e('My Bookings','listeo');?></a></li>
@@ -158,10 +177,16 @@
 							$submit_page = get_option('listeo_submit_page');  
 							if(function_exists('Listeo_Core')):
 							if( $popup_login == 'ajax' && !is_page_template('template-dashboard.php') ) { ?>
-								<a href="#sign-in-dialog" class="sign-in popup-with-zoom-anim"><i class="sl sl-icon-login"></i> <?php esc_html_e('Sign In', 'listeo'); ?></a>
+								<!--<a href="#sign-in-dialog" class="sign-in popup-with-zoom-anim "><i class="sl sl-icon-login"></i> <?php esc_html_e('Sign In', 'listeo'); ?></a>
+								
+								<a href="#sign-in-dialog" class="sign-in popup-with-zoom-anim"><i class="sl sl-icon-user"></i> <?php esc_html_e('Sign Up', 'listeo'); ?></a>-->
+								<a href="#sign-in-dialog" class="sign-in popup-with-zoom-anim new-signin sign_in_link"> <?php esc_html_e('Sign In', 'listeo'); ?></a>
+								
+								<a href="#sign-in-dialog" class="sign-in popup-with-zoom-anim new-signin sign_up_link"> <?php esc_html_e('Sign Up', 'listeo'); ?></a>
+								
 							<?php } else {
 								$login_page = get_option('listeo_profile_page') ?>
-								<a href="<?php echo esc_url(get_permalink($login_page)); ?>" class="sign-in"><i class="sl sl-icon-login"></i> <?php esc_html_e('Sign In', 'listeo'); ?></a>
+								<a href="<?php echo esc_url(get_permalink($login_page)); ?>" class="sign-in sign_in_link"><!--<i class="sl sl-icon-login"></i>--> <?php esc_html_e('Sign In', 'listeo'); ?></a>
 							<?php }
 							endif; ?>
 						<?php } ?>
@@ -171,7 +196,7 @@
 						<?php if(is_user_logged_in()){ ?>
 							<?php if(in_array($role,array('administrator','admin','owner'))) : ?>
 								<?php $submit_page = get_option('listeo_submit_page');  if( $submit_page ) : ?>
-									<a href="<?php echo esc_url(get_permalink($submit_page)); ?>" class="button border with-icon"><?php esc_html_e('Add Listing', 'listeo'); ?> <i class="sl sl-icon-plus"></i></a>
+									<a data-t1="<?php echo $submit_page; ?>" href="<?php echo esc_url(get_permalink($submit_page)); ?>" class="button border with-icon"><?php esc_html_e('Add Listing', 'listeo'); ?> <i class="sl sl-icon-plus"></i></a>
 								<?php endif; ?>
 							<?php else: ?>
 								<?php $browse_page = get_post_type_archive_link( 'listing' ); ;  if( $browse_page ) : ?>
@@ -180,7 +205,7 @@
 							<?php endif; ?>	
 						<?php } else { ?>
 								<?php $submit_page = get_option('listeo_submit_page');  if( $submit_page ) : ?>
-									<a href="<?php echo esc_url(get_permalink($submit_page)); ?>" class="button border with-icon"><?php esc_html_e('Add Listing', 'listeo'); ?> <i class="sl sl-icon-plus"></i></a>
+									<a data-t2="<?php echo $submit_page; ?>" href="<?php echo esc_url(get_permalink($submit_page)); ?>" class="button border with-icon"><?php esc_html_e('Add Listing', 'listeo'); ?> <i class="sl sl-icon-plus"></i></a>
 								<?php endif; ?>
 						<?php } ?>
 						
@@ -212,3 +237,29 @@ if( true == $my_account_display) : ?>
 <?php endif; ?>
 <div class="clearfix"></div>
 <!-- Header Container / End -->
+
+<script type="text/javascript">
+jQuery( document ).ready(function() {
+	<?php 
+	if(is_page(66)){
+		?>		
+		setTimeout(function(){ jQuery('.sign_in_li').trigger('click'); }, 200);
+		<?php
+	}
+	else{
+		?>
+		setTimeout(function(){ jQuery('.sign_up_li').trigger('click'); }, 200);
+	<?php
+	}
+	?>
+	jQuery('.btn.btn-mo.btn-block.btn-social.btn-customtheme.btn-custom-dec.login-button').attr("style","");
+	jQuery('.mofa.mofa-google').css("margin-top","5px");
+	jQuery('.mofa.mofa-facebook').css("margin-top","5px");
+});
+</script>
+<script>
+	jQuery(document).on('click','.sign_up_link',function(){
+        jQuery('.sign_in_li').removeClass('active');
+        jQuery('.sign_up_li').trigger('click');
+	});
+</script>
