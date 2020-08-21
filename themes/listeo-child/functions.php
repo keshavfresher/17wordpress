@@ -126,7 +126,18 @@ function whero_limit_image_size($file) {
 	return $file;
 
 }
-/**
- * Commented this code, as client does not want such restriction
- **/
 //add_filter('wp_handle_upload_prefilter', 'whero_limit_image_size');
+
+
+add_action("widgets_init","register_unveryfie_siderbar");
+    function register_unveryfie_siderbar()
+    {
+      register_sidebar(array(
+      'name' => 'Single Unveryfie Listing Sidebar',
+      'id' => 'single_unveryfie_siderbar',
+      'before_widget' => '<div id="%1$s" class="widget %2$s">',
+      'after_widget' => '</div>',
+      'before_title' => '<h3>',
+      'after_title' => '</h3>'
+       ));
+    }
